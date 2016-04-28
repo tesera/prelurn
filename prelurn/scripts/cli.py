@@ -8,4 +8,4 @@ import prelurn
 def cli(count):
     """Echo a value `N` number of times"""
     for i in range(count):
-        click.echo(prelurn.has_legs)
+        click.echo(prelurn.has_legs())
