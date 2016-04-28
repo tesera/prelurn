@@ -9,8 +9,7 @@ import logging
 import os
 
 # package modules modules
-from .data_frame import DataFrame
-from .utils import load_dtypes_file
+from .core import describe, suggest
 
 
 log_filename = __name__ + '.log'
@@ -29,4 +28,4 @@ def has_legs():
     return False
 
 
-__all__ = ['DataFrame', 'load_dtypes_file']
+__all__ = ['suggest', 'describe']
