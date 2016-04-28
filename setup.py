@@ -23,11 +23,12 @@ setup(name='prelurn',
           'prelurn': ['data/*'],
       },
       install_requires=[
-          'click==6.6'
+          'click==6.6',
+          'pandas==0.18.0',
       ],
       extras_require={
           'test': ['pytest==2.9.1'],
-          'dev': ['pytest==2.9.1', 'sphinx==1.4.1']
+          'dev': ['pytest==2.9.1', 'sphinx==1.4.1'],
       },
       entry_points="""
       [console_scripts]
