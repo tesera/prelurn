@@ -17,13 +17,17 @@ setup(name='prelurn',
       url='',
       license='',
       packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
-      include_package_data=True,
       zip_safe=False,
+      include_package_data=True,
+      package_data={
+          'prelurn': ['data/*'],
+      },
       install_requires=[
-          'click'
+          'click==6.6'
       ],
       extras_require={
-          'test': ['pytest'],
+          'test': ['pytest==2.9.1'],
+          'dev': ['pytest==2.9.1', 'sphinx==1.4.1']
       },
       entry_points="""
       [console_scripts]
