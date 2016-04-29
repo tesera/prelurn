@@ -1,14 +1,17 @@
 import pandas as pd
 
+from ._log import log
 
-def describe(as_json, dtypes_filepath, **kwargs):
+def describe(df):
     """ Describe a dataset
 
-    :param as_json:
-    :param dtypes_file: file defining input data types
+    This is a layer to separate the CLI from pandas, in case we ever want to
+    extend the behaviour of DataFrame.describe
+
+    :param df: input data frame
     """
-    pass
-    #pd.read_csv()
+    log.info('Running describe')
+    return df.describe()
 
 
 def suggest(df):

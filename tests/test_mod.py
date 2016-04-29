@@ -1,5 +1,13 @@
-import prelurn
+import pytest
+
+from prelurn import describe, suggest
 
 
-def test_has_legs():
-    assert not prelurn.has_legs()
+@pytest.mark.xfail(message='TODO')
+def test_describe():
+    assert False
+
+
+@pytest.mark.xfail(message='TODO')
+def test_suggest():
+    assert False
