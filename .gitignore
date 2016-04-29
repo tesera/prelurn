@@ -55,3 +55,7 @@ target/
 # Virtualenv
 venv/
 dev.env
+
+# Likely output
+*data_describe.*
+*data_suggest.*
