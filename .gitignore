@@ -56,5 +56,7 @@ venv/
 *dev.env
 
 # Likely output
-*data_describe.*
-*data_suggest.*
+*describe.json*
+*describe.csv*
+*suggest.json*
+*suggest.csv*

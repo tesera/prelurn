@@ -2,6 +2,8 @@ dev:
   container_name: prelurn
   build: .
   env_file: env/dev.env
+  environment:
+    BOTO_CONFIG: /opt/prelurn/env/boto.config
   volumes:
     - ./:/opt/prelurn
   command: ["/bin/bash", "--rcfile", "/opt/prelurn/venv/bin/activate"]
@@ -9,6 +11,8 @@ test:
   container_name: prelurn
   build: .
   env_file: env/dev.env
+  environment:
+    BOTO_CONFIG: /opt/prelurn/env/boto.config
   volumes:
     - ./:/opt/prelurn
   command: 'bash bin/run_tests.sh'
@@ -16,6 +20,8 @@ docs:
   container_name: prelurn
   build: .
   env_file: env/dev.env
+  environment:
+    BOTO_CONFIG: /opt/prelurn/env/boto.config
   volumes:
     - ./:/opt/prelurn
   command: 'bash bin/make_docs.sh'
