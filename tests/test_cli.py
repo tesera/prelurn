@@ -37,6 +37,13 @@ def test_describe_json(test_data_path):
     assert os.path.exists('data_describe.json')
 
 
+
+def test_describe_json_objects_are_vars():
+    # since data is transposed, be careful of json
+    # key should be a variable, i think
+    assert False
+
+
 @skip_if_no_s3
 def test_describe_with_s3_source():
     test_data_path = os.environ['S3_TEST_DATA_URL']
@@ -45,11 +52,11 @@ def test_describe_with_s3_source():
     assert result.exit_code == 0
     assert os.path.exists('data_describe.json')
 
+
 @skip_if_no_s3
 def test_describe_output_to_s3():
     pass
 
-# test s3 without credentials
 
 @pytest.mark.xfail(message="not yet implemented")
 def test_suggest():

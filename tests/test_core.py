@@ -1,5 +1,6 @@
 import pytest
 import pandas as pd
+import numpy as np
 
 from prelurn import describe, suggest
 
@@ -11,7 +12,7 @@ def test_describe_works_with_numeric():
     result = describe(df)
 
     assert type(result) is pd.DataFrame
-    assert result.shape[1] == 1
+    assert result.shape[0] == 1
 
 
 def test_describe_works_with_categorical():
@@ -21,29 +22,19 @@ def test_describe_works_with_categorical():
     result = describe(df)
 
     assert type(result) is pd.DataFrame
-    assert result.shape[1] == 1
+    assert result.shape[0] == 1
 
 
-def test_describe_works_with_mixed():
+def test_describe_works_with_mixed_data():
     df = pd.DataFrame({
         'numeric': range(6),
         'categorical':['a', 'b', 'c', 'd', 'd', 'd']
     })
-    result = describe(df)
+    result = describe(df, custom_attrs=False)
 
     assert type(result) is pd.DataFrame
-    assert result.shape[1] == 2
+    assert result.shape[0] == 11
 
-
-def test_describe_includes_type_as_attribute():
-    df = pd.DataFrame({
-        'numeric': range(6),
-        'categorical':['a', 'b', 'c', 'd', 'd', 'd']
-    })
-    result = describe(df)
-
-    assert result.loc['type', 'numeric'] == 'numeric'
-    assert result.loc['type', 'categorical'] == 'categorical'
 
     # df.dtypes gives type for each column, can transpose, map to our basic
     # types, and append
@@ -54,6 +45,17 @@ def test_describe_includes_type_as_attribute():
     # already didn't like that is uses attributes as rows, so will have to
     # change format so that each row is a variable and column is the describe
     # attribute
+
+
+def test_describe_includes_type_attribute():
+    df = pd.DataFrame({
+        'numeric': range(6),
+        'categorical':['a', 'b', 'c', 'd', 'd', 'd']
+    })
+    result = describe(df)
+
+    assert result.loc['type', 'numeric'] == 'numeric'
+    assert result.loc['type', 'categorical'] == 'categorical'
 
 
 @pytest.mark.xfail(message='TODO')
