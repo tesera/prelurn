@@ -10,10 +10,10 @@ test:
   build: .
   volumes:
     - ./:/opt/prelurn
-  command: 'bash run_tests.sh'
+  command: 'bash bin/run_tests.sh'
 docs:
   container_name: prelurn
   build: .
   volumes:
     - ./:/opt/prelurn
-  command: 'bash make_docs.sh'
+  command: 'bash bin/make_docs.sh'
