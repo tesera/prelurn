@@ -10,7 +10,7 @@ skip_if_no_s3 = pytest.mark.skipif(os.environ.get('S3_TEST_DATA_URL') is None,
                                            'is not configured'))
 
 # TODO: check data is correct
-def test_cli_describe(test_data_path):
+def test_describe(test_data_path):
     runner = CliRunner()
     result = runner.invoke(cli, ['describe', test_data_path])
 
@@ -18,7 +18,7 @@ def test_cli_describe(test_data_path):
     assert os.path.exists('data_describe.csv')
 
 
-def test_cli_describe_json(test_data_path):
+def test_describe_json(test_data_path):
     runner = CliRunner()
     result = runner.invoke(cli, ['describe', test_data_path, '-j'])
 
@@ -27,17 +27,17 @@ def test_cli_describe_json(test_data_path):
 
 
 @skip_if_no_s3
-def test_cli_describe_with_s3_source():
+def test_describe_with_s3_source():
     test_data_path = os.environ['S3_TEST_DATA_URL']
     runner = CliRunner()
     result = runner.invoke(cli, ['describe', test_data_path, '-j'])
     assert result.exit_code == 0
     assert os.path.exists('data_describe.json')
 
-
+def test_describe_output_to_s3():
+    pass
 # some may go in module tests
 # test s3 without credentials
-# test to s3
 # test only categorical data
 # test only numeric data
 # test mixed data
@@ -47,5 +47,5 @@ def test_cli_describe_with_s3_source():
 
 
 @pytest.mark.xfail(message="not yet implemented")
-def test_cli_suggest():
+def test_suggest():
     assert False
