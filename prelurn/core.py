@@ -11,7 +11,10 @@ def describe(df):
     :param df: input data frame
     """
     log.info('Running describe')
-    return df.describe()
+
+    description = df.describe(include='all')
+
+    return description
 
 
 def suggest(df):
