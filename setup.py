@@ -25,6 +25,7 @@ setup(name='prelurn',
       install_requires=[
           'click==6.6',
           'pandas==0.18.0',
+          'boto==2.40.0',
       ],
       extras_require={
           'test': ['pytest==2.9.1'],

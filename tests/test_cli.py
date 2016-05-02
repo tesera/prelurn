@@ -28,10 +28,9 @@ def test_cli_describe_json(test_data_path):
 
 @skip_if_no_s3
 def test_cli_describe_with_s3_source():
-    test_data_path = sys.getenv('S3_TEST_DATA_URL', None)
+    test_data_path = os.environ['S3_TEST_DATA_URL']
     runner = CliRunner()
     result = runner.invoke(cli, ['describe', test_data_path, '-j'])
-
     assert result.exit_code == 0
     assert os.path.exists('data_describe.json')
 
