@@ -2,7 +2,7 @@ import os
 import click
 import pandas as pd
 
-from prelurn import describe, suggest
+import prelurn
 from prelurn._log import log
 
 
@@ -37,8 +37,8 @@ def cli(verbose):
               help='write output to json file')
 @click.option('--outfile', '-o', callback=create_out_filepath,
               type=click.Path(),
-              help=('path to use for output data. default is to write'
-                    'to working directory'))
+              help=('path to use for output data, excluding file extension. '
+                    'default is to write to working directory'))
 def describe(table, json, outfile):
     """Summarize data in a csv file
 
@@ -50,10 +50,11 @@ def describe(table, json, outfile):
     log.info('Reading table from %s', table)
     df = pd.read_csv(table)
 
-    description = df.describe()
+    description = prelurn.describe(df)
 
     log.info('Writing description of data to %s', outfile)
+
     if json:
-        description.to_json(outfile)
+        description.to_json(outfile, orient='index')
     else:
         description.to_csv(outfile)

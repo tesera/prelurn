@@ -40,7 +40,7 @@ def test_describe_json(test_data_path):
 
 def test_describe_json_objects_are_vars():
     # since data is transposed, be careful of json
-    # key should be a variable, i think
+    # key should be a variable, not a column!
     assert False
 
 
