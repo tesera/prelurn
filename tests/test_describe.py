@@ -34,7 +34,6 @@ def test_summarize_types(df_mixed_types):
 
 
 def test_get_fraction_missing():
-
     df = pd.DataFrame(OrderedDict(
         numeric = [np.nan, np.nan, np.nan, 1.2],
         categorical = ['c', np.nan, 'd', 'd']

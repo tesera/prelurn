@@ -14,11 +14,12 @@ def describe(df, custom_attrs=True):
     """
     log.info('Running describe')
 
-    pd_describe_df = pandas_describe(df)
+    description = pandas_describe(df)
 
     if custom_attrs:
         custom_attrs = custom_describe(df)
-
+        description = pd.concat([custom_attrs, description],
+                                axis=1, join_axes=[custom_attrs.index])
     return description
 
 
