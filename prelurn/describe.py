@@ -1,4 +1,7 @@
 """Functions for describing data"""
+import numpy as np
+import pandas as pd
+from collections import OrderedDict
 
 
 def pandas_describe(df):
@@ -10,6 +13,8 @@ def basic_type_from_name(name):
     """ Get basic data type name from dtype
 
     :param name: name attribute of dtype - type.name
+    :return:
+    :rtype:
     """
 
     candidates = {'float': 'numeric',
@@ -33,6 +38,8 @@ def summarize_types(df):
     """ Get simple data types for each variable
 
     :param df: data frame
+    :return:
+    :rtype:
     """
     types = df.dtypes
     basic_types = [basic_type_from_name(item.name) for item in types]
@@ -44,8 +51,19 @@ def get_fraction_missing(df):
     """ Get fraction of observation missing for each variable
 
     :param df: data frame
+    :return: missing fractions in order of df columns
+    :rtype: list
     """
-    df.isnull().sum()
+    num_rows = df.shape[0]
+    missing_fraction = df.isnull().sum() / num_rows
+
+    return missing_fraction.values.tolist()
+
+
+def _get_categories_as_str(column, category_sep=','):
+    cat_list = column.cat.categories.tolist()
+    cat_str = category_sep.join(cat_list)
+    return cat_str
 
 
 def get_unique_categories(df):
@@ -54,14 +72,39 @@ def get_unique_categories(df):
     np.nan if variable is not categorical
 
     :param df: data frame
+    :return:
+    :rtype:
     """
-    pass
+    # TODO: may want to support string/object type
+    # flatten lists for use in custom_describe
+    # http://stackoverflow.com/questions/26806054/how-to-use-lists-as-values-in-pandas-dataframe
+
+    return [_get_categories_as_str(df[c]) if df[c].dtype.name=='category' \
+            else np.nan \
+            for c in df]
 
 
 def custom_describe(df):
-    pass
+    """Describe a data frame
 
-    # utils.py
-    # types - df.dtypes
-    # fraction_missing
-    # unique_classes
+    Function to run the custom describe functions and format data in a shape
+    that can be merged to the result of pandas_describe, specifically,
+    variables as rows and descriptives as columns.
+
+    :param df: data frame
+    :return:
+    :rtype:
+
+    """
+    types = summarize_types(df)
+    fraction_missing = get_fraction_missing(df)
+    unique_classes = get_unique_categories(df)
+    new_index = df.columns.tolist()
+
+    data = OrderedDict(type=types,
+                       missing_proportion=fraction_missing,
+                       categories=unique_classes)
+
+    describe_df = pd.DataFrame(data, index=new_index)
+
+    return describe_df

@@ -1,6 +1,10 @@
+import numpy as np
+import pandas as pd
+from collections import OrderedDict
+
 from prelurn.describe import (pandas_describe, summarize_types,
                               get_fraction_missing, get_unique_categories,
-                              custom_describe)
+                              custom_describe, basic_type_from_name)
 
 
 def test_pandas_describe(df_mixed_types):
@@ -16,33 +20,39 @@ def test_pandas_describe(df_mixed_types):
 
 def test_basic_type_from_name():
     btype = basic_type_from_name
+
     assert btype('float64') == 'numeric'
     assert btype('float32') == 'numeric'
     assert btype('datetime') == 'timestamp'
-    assert btype('nosuchtype') is None
+    assert btype('nosuchtype') == 'unknown'
+
 
 def test_summarize_types(df_mixed_types):
-    # test correct
-    # format
     result = summarize_types(df_mixed_types)
-    assert False
+
+    assert result == ['numeric', 'categorical']
 
 
-def test_fraction_missing(df_mixed_types):
-    # works on numeric and cat
-    # amounts are correct
-    # format
-    assert False
+def test_get_fraction_missing():
+
+    df = pd.DataFrame(OrderedDict(
+        numeric = [np.nan, np.nan, np.nan, 1.2],
+        categorical = ['c', np.nan, 'd', 'd']
+    ))
+    result = get_fraction_missing(df)
+
+    assert result == [0.75, 0.25]
 
 
 def test_unique_categories(df_mixed_types):
-    # numeric cols nan
-    # categorical cols correct
-    # format
-    assert False
+    result = get_unique_categories(df_mixed_types)
+    assert result == [np.nan, 'a,b,c,d']
 
 
 def test_custom_describe(df_mixed_types):
-    # test transposed
-    # test has pandas and custom cols
-    assert False
+    result = custom_describe(df_mixed_types)
+    expected_cols = ['type', 'missing_proportion', 'categories']
+    cols = result.columns.tolist()
+
+    assert type(result) == pd.DataFrame
+    assert sorted(expected_cols) == sorted(cols)

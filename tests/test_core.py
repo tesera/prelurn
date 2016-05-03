@@ -54,9 +54,7 @@ def test_describe_includes_type_attribute():
     })
     result = describe(df)
 
-    assert result.loc['type', 'numeric'] == 'numeric'
-    assert result.loc['type', 'categorical'] == 'categorical'
-
+    assert False
 
 @pytest.mark.xfail(message='TODO')
 def test_suggest():

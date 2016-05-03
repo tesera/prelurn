@@ -1,6 +1,8 @@
 import os
 import pytest
+import numpy as np
 import pandas as pd
+from collections import OrderedDict
 
 @pytest.fixture
 def test_data_path():
@@ -11,9 +13,16 @@ def test_data_path():
 
 @pytest.fixture
 def df_mixed_types():
-    df = pd.DataFrame({
-        'numeric': range(6),
-        'categorical':['a', 'b', 'c', 'd', 'd', 'd']
-    })
+    df = pd.DataFrame(OrderedDict(
+        numeric = range(6),
+        categorical = ['a', 'b', 'c', 'd', 'd', 'd']
+    ))
+    df['categorical'] = df['categorical'].astype('category')
+
+    return df
+
+
+@pytest.fixture
+def df_with_missing_vals():
 
     return df

@@ -1,7 +1,7 @@
 import pandas as pd
 
 from ._log import log
-
+from .describe import custom_describe, pandas_describe
 
 def describe(df, custom_attrs=True):
     """Describe a dataset
@@ -14,12 +14,10 @@ def describe(df, custom_attrs=True):
     """
     log.info('Running describe')
 
-    description = pandas_describe(df)
+    pd_describe_df = pandas_describe(df)
 
     if custom_attrs:
-        pass
-        #custom_attrs = custom_describe(df)
-        # merge
+        custom_attrs = custom_describe(df)
 
     return description
 
