@@ -14,6 +14,13 @@ def test_pandas_describe(df_mixed_types):
     assert result.columns.tolist() == pd_transposed_describe_columns
 
 
+def test_basic_type_from_name():
+    btype = basic_type_from_name
+    assert btype('float64') == 'numeric'
+    assert btype('float32') == 'numeric'
+    assert btype('datetime') == 'timestamp'
+    assert btype('nosuchtype') is None
+
 def test_summarize_types(df_mixed_types):
     # test correct
     # format

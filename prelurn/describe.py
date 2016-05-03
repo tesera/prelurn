@@ -5,17 +5,39 @@ def pandas_describe(df):
     return df.describe(include='all').transpose()
 
 
+# TODO: would be a nice thing to cache
+def basic_type_from_name(name):
+    """ Get basic data type name from dtype
+
+    :param name: name attribute of dtype - type.name
+    """
+
+    candidates = {'float': 'numeric',
+                  'int': 'numeric',
+                  'bool': 'boolean',
+                  'datetime': 'timestamp',
+                  'category': 'categorical',
+                  'object': 'categorical'}
+
+    basic_type = 'unknown'
+
+    for prefix, val in candidates.items():
+
+        if name.startswith(prefix):
+            basic_type = val
+
+    return basic_type
+
+
 def summarize_types(df):
     """ Get simple data types for each variable
 
     :param df: data frame
     """
     types = df.dtypes
-    # simple_types = {
-    #     this: that,
-    # }
-    # types = [simple_types[item] for item in types]
-    return types
+    basic_types = [basic_type_from_name(item.name) for item in types]
+
+    return basic_types
 
 
 def get_fraction_missing(df):
