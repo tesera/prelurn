@@ -40,6 +40,6 @@ def test_describe_raises_if_quantile_type_invalid(df_mixed_types):
         assert e.msg == 'nosuchtype is not valid for quantile_type'
 
 
-@pytest.mark.xfail(message='TODO')
+@pytest.mark.skip(message='Future version')
 def test_suggest():
     assert False

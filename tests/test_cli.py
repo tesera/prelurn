@@ -27,7 +27,6 @@ def read_two_files(file1, file2):
 
     return f1, f2
 
-# TODO: check data is correct
 def test_describe(test_data_path, expected_data_dir):
     runner = CliRunner()
     result = runner.invoke(cli, ['describe', test_data_path])
