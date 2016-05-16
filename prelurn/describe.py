@@ -4,8 +4,13 @@ import pandas as pd
 from collections import OrderedDict
 
 
-def pandas_describe(df):
-    return df.describe(include='all').transpose()
+def _pandas_describe(df, **kwargs):
+    """ Wrapper to dataFrame.describe with desired default arguments
+
+    :param df: data frame
+    :param **kwargs: keyword arguments to DataFrame.describe
+    """
+    return df.describe(include='all', **kwargs).transpose()
 
 
 # TODO: would be a nice thing to cache
@@ -88,7 +93,7 @@ def custom_describe(df):
     """Describe a data frame
 
     Function to run the custom describe functions and format data in a shape
-    that can be merged to the result of pandas_describe, specifically,
+    that can be merged to the result of _pandas_describe, specifically,
     variables as rows and descriptives as columns.
 
     :param df: data frame

@@ -35,11 +35,13 @@ def cli(verbose):
 @click.argument('table', type=click.Path(), required=True)
 @click.option('--json', '-j', is_flag=True, default=False,
               help='write output to json file')
+@click.option('--quantile-type', '-q', type=click.Choice(['decile', 'quartile']),
+              default='decile', help='percentiles to use')
 @click.option('--outfile', '-o', callback=create_out_filepath,
               type=click.Path(),
               help=('path to use for output data, excluding file extension. '
                     'default is to write to working directory'))
-def describe(table, json, outfile):
+def describe(table, json, quantile_type, outfile):
     """Summarize data in a csv file
 
     TABLE is the path to a csv file, as per
@@ -50,7 +52,7 @@ def describe(table, json, outfile):
     log.info('Reading table from %s', table)
     df = pd.read_csv(table)
 
-    description = prelurn.describe(df)
+    description = prelurn.describe(df, quantile_type=quantile_type)
 
     log.info('Writing description of data to %s', outfile)
 

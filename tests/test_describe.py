@@ -2,13 +2,13 @@ import numpy as np
 import pandas as pd
 from collections import OrderedDict
 
-from prelurn.describe import (pandas_describe, summarize_types,
+from prelurn.describe import (_pandas_describe, summarize_types,
                               get_fraction_missing, get_unique_categories,
                               custom_describe, basic_type_from_name)
 
 
 def test_pandas_describe(df_mixed_types):
-    result = pandas_describe(df_mixed_types)
+    result = _pandas_describe(df_mixed_types)
     pd_transposed_describe_columns = ['count', 'unique',
                                       'top', 'freq', 'mean',
                                       'std', 'min', '25%',
@@ -16,7 +16,6 @@ def test_pandas_describe(df_mixed_types):
 
     assert result.shape[0] == 2
     assert result.columns.tolist() == pd_transposed_describe_columns
-
 
 def test_basic_type_from_name():
     btype = basic_type_from_name
