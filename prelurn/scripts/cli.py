@@ -58,6 +58,6 @@ def describe(table, json, quantile_type, outfile):
     log.info('Writing description of data to %s', outfile)
 
     if json:
-        description.to_json(outfile, orient='index')
+        description.to_json(outfile, orient='columns')
     else:
         description.to_csv(outfile)

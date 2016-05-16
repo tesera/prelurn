@@ -1,4 +1,5 @@
 import os
+import json
 import pytest
 from click.testing import CliRunner
 
@@ -71,11 +72,14 @@ def test_describe_using_quartiles(test_data_path, expected_data_dir):
     assert output == expected
 
 
-def test_describe_json_objects_are_vars():
-    # since data is transposed, be careful of json
-    # key should be a variable, not a column!
-    assert False
+def test_describe_json_objects_are_vars(test_data_path):
+    runner = CliRunner()
+    result = runner.invoke(cli, ['describe', test_data_path, '-j'])
+    with open('data_describe.json', 'r') as f:
+        json_data = json.load(f)
 
+    assert u'type' in json_data
+    assert u'VAR1' not in json_data
 
 def test_describe_preserves_given_outfile_name(test_data_path):
     runner = CliRunner()
@@ -96,7 +100,7 @@ def test_describe_with_s3_source():
     assert os.path.exists('data_describe.json')
 
 
-@skip_if_no_s3
+@pytest.mark.skip(message="Assuming pandas has taken care of this")
 def test_describe_output_to_s3():
     pass
 
