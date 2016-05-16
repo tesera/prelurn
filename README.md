@@ -56,7 +56,8 @@ It should have the following
 AWS_ACCESS_KEY_ID=
 AWS_SECRET_ACCESS_KEY=
 AWS_REGION=
-GITHUB_TOKEN=
+BOTO_CONFIG=
+S3_TEST_DATA_URL=
 ```
 
 ### docker-compose
