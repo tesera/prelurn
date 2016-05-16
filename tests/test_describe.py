@@ -46,6 +46,14 @@ def test_unique_categories(df_mixed_types):
     result = get_unique_categories(df_mixed_types)
     assert result == [np.nan, 'a,b,c,d']
 
+def test_unique_categories_str():
+    df = pd.DataFrame(OrderedDict(
+        numeric = [10.11, 10, 11, 1.2],
+        categorical = ['c', np.nan, 'd', 'd']
+    ))
+    result = get_unique_categories(df)
+    assert result == [np.nan, 'c,d']
+
 
 def test_custom_describe(df_mixed_types):
     result = custom_describe(df_mixed_types)

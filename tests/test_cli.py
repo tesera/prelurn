@@ -28,6 +28,7 @@ def read_two_files(file1, file2):
 
     return f1, f2
 
+
 def test_describe(test_data_path, expected_data_dir):
     runner = CliRunner()
     result = runner.invoke(cli, ['describe', test_data_path])
@@ -80,6 +81,7 @@ def test_describe_json_objects_are_vars(test_data_path):
 
     assert u'type' in json_data
     assert u'VAR1' not in json_data
+
 
 def test_describe_preserves_given_outfile_name(test_data_path):
     runner = CliRunner()
