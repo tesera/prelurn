@@ -27,9 +27,3 @@ def df_mixed_types():
     df['categorical'] = df['categorical'].astype('category')
 
     return df
-
-
-@pytest.fixture
-def df_with_missing_vals():
-
-    return df
