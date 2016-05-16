@@ -22,7 +22,7 @@ skip_if_no_s3 = pytest.mark.skipif(env_has_s3_vars(),
                                            'are not properly configured.'))
 
 def read_two_files(file1, file2):
-    with open(file2, 'r') as a, open(file2, 'r') as b:
+    with open(file1, 'r') as a, open(file2, 'r') as b:
         f1 = a.readlines()
         f2 = b.readlines()
 
