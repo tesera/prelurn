@@ -29,77 +29,93 @@ def read_two_files(file1, file2):
     return f1, f2
 
 
-def test_describe(test_data_path, expected_data_dir):
+def test_describe(test_data_path, expected_data_dir, tmpdir):
+    generated_filename = 'data_describe.csv'
+    generated_file_path = os.path.join(tmpdir.strpath, generated_filename)
+    expected_file_path = os.path.join(expected_data_dir, generated_filename)
+
     runner = CliRunner()
-    result = runner.invoke(cli, ['describe', test_data_path])
+    result = runner.invoke(cli, ['describe', test_data_path,
+                                 '-o', generated_file_path])
+    output, expected = read_two_files(generated_file_path,
+                                      expected_file_path)
 
     assert result.exit_code == 0
-
-    generated_file = 'data_describe.csv'
-    expected_file = os.path.join(expected_data_dir, generated_file)
-    output, expected = read_two_files(generated_file,
-                                      expected_file)
     assert output == expected
 
 
-def test_describe_json(test_data_path, expected_data_dir):
+def test_describe_json(test_data_path, expected_data_dir, tmpdir):
+    generated_filename = 'data_describe.json'
+    generated_file_path = os.path.join(tmpdir.strpath, generated_filename)
+    expected_file_path = os.path.join(expected_data_dir, generated_filename)
+
     runner = CliRunner()
-    result = runner.invoke(cli, ['describe', test_data_path, '-j'])
+    result = runner.invoke(cli, ['describe', test_data_path, '-j',
+                                 '-o', generated_file_path])
+    output, expected = read_two_files(generated_file_path,
+                                      expected_file_path)
 
     assert result.exit_code == 0
-
-    generated_file = 'data_describe.json'
-    expected_file = os.path.join(expected_data_dir, generated_file)
-    output, expected = read_two_files(generated_file,
-                                      expected_file)
-
     assert output == expected
 
 
-def test_describe_using_quartiles(test_data_path, expected_data_dir):
+def test_describe_using_quartiles(test_data_path, expected_data_dir, tmpdir):
+    generated_filename = 'data_describe_quartile.csv'
+    generated_file_path = os.path.join(tmpdir.strpath, generated_filename)
+    expected_file_path = os.path.join(expected_data_dir, generated_filename)
+
     runner = CliRunner()
     result = runner.invoke(cli,
                            ['describe', test_data_path,
                             '--quantile-type', 'quartile',
-                            '--outfile', 'data_describe_quartile.csv'])
+                            '-o', generated_file_path])
+    output, expected = read_two_files(generated_file_path,
+                                      expected_file_path)
 
     assert result.exit_code == 0
-
-    generated_file = 'data_describe_quartile.csv'
-    expected_file = os.path.join(expected_data_dir, generated_file)
-    output, expected = read_two_files(generated_file,
-                                      expected_file)
-
     assert output == expected
 
 
-def test_describe_json_objects_are_vars(test_data_path):
+def test_describe_json_objects_are_vars(test_data_path, tmpdir):
     runner = CliRunner()
-    result = runner.invoke(cli, ['describe', test_data_path, '-j'])
-    with open('data_describe.json', 'r') as f:
+    generated_filename = 'data_describe.json'
+    generated_file_path = os.path.join(tmpdir.strpath, generated_filename)
+    result = runner.invoke(cli, ['describe', test_data_path,
+                                 '-j',
+                                 '-o', generated_file_path])
+
+    with open(generated_file_path, 'r') as f:
         json_data = json.load(f)
 
     assert u'type' in json_data
     assert u'VAR1' not in json_data
 
 
-def test_describe_preserves_given_outfile_name(test_data_path):
+def test_describe_writes_to_working_dir_by_deafult(test_data_path):
     runner = CliRunner()
     result = runner.invoke(cli,
                            ['describe', test_data_path,
-                            '--quantile-type', 'quartile',
-                            '--outfile', 'data_describe_quartile.txt'])
+                            '--quantile-type', 'quartile'])
+    expected_file_path = './data_describe.csv'
 
-    assert os.path.exists('data_describe_quartile.txt')
+    assert os.path.exists(expected_file_path)
+
+    os.remove(expected_file_path)
 
 
 @skip_if_no_s3
 def test_describe_with_s3_source():
     test_data_path = os.environ['S3_TEST_DATA_URL']
     runner = CliRunner()
-    result = runner.invoke(cli, ['describe', test_data_path, '-j'])
+    out_file_path = 's3data_describe.csv'
+    result = runner.invoke(cli, ['describe', test_data_path,
+                                 '-j',
+                                 '-o', out_file_path])
+
     assert result.exit_code == 0
-    assert os.path.exists('data_describe.json')
+    assert os.path.exists(out_file_path)
+
+    os.remove(out_file_path)
 
 
 @pytest.mark.skip(message="Assuming pandas has taken care of this")
