@@ -60,3 +60,5 @@ venv/
 *describe.csv*
 *suggest.json*
 *suggest.csv*
+*describe_quartile*
+!/tests/data/expected/*

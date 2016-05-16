@@ -4,8 +4,13 @@ import pandas as pd
 from collections import OrderedDict
 
 
-def pandas_describe(df):
-    return df.describe(include='all').transpose()
+def _pandas_describe(df, **kwargs):
+    """ Wrapper to dataFrame.describe with desired default arguments
+
+    :param df: data frame
+    :param **kwargs: keyword arguments to DataFrame.describe
+    """
+    return df.describe(include='all', **kwargs).transpose()
 
 
 # TODO: would be a nice thing to cache
@@ -61,34 +66,35 @@ def get_fraction_missing(df):
 
 
 def _get_categories_as_str(column, category_sep=','):
+    if column.dtype.name not in ['object', 'category']:
+        return np.nan
+
+    if column.dtype.name == 'object':
+        column = column.astype('category')
+
     cat_list = column.cat.categories.tolist()
     cat_str = category_sep.join(cat_list)
+
     return cat_str
 
 
 def get_unique_categories(df):
     """ Get unique classes for each variable
 
-    np.nan if variable is not categorical
+    np.nan if variable is not categorical or string
 
     :param df: data frame
-    :return:
-    :rtype:
+    :return: unique values in data frame
+    :rtype: list
     """
-    # TODO: may want to support string/object type
-    # flatten lists for use in custom_describe
-    # http://stackoverflow.com/questions/26806054/how-to-use-lists-as-values-in-pandas-dataframe
-
-    return [_get_categories_as_str(df[c]) if df[c].dtype.name=='category' \
-            else np.nan \
-            for c in df]
+    return [_get_categories_as_str(df[c]) for c in df]
 
 
 def custom_describe(df):
     """Describe a data frame
 
     Function to run the custom describe functions and format data in a shape
-    that can be merged to the result of pandas_describe, specifically,
+    that can be merged to the result of _pandas_describe, specifically,
     variables as rows and descriptives as columns.
 
     :param df: data frame
