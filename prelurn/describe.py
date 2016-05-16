@@ -66,27 +66,28 @@ def get_fraction_missing(df):
 
 
 def _get_categories_as_str(column, category_sep=','):
+    if column.dtype.name not in ['object', 'category']:
+        return np.nan
+
+    if column.dtype.name == 'object':
+        column = column.astype('category')
+
     cat_list = column.cat.categories.tolist()
     cat_str = category_sep.join(cat_list)
+
     return cat_str
 
 
 def get_unique_categories(df):
     """ Get unique classes for each variable
 
-    np.nan if variable is not categorical
+    np.nan if variable is not categorical or string
 
     :param df: data frame
-    :return:
-    :rtype:
+    :return: unique values in data frame
+    :rtype: list
     """
-    # TODO: may want to support string/object type
-    # flatten lists for use in custom_describe
-    # http://stackoverflow.com/questions/26806054/how-to-use-lists-as-values-in-pandas-dataframe
-
-    return [_get_categories_as_str(df[c]) if df[c].dtype.name=='category' \
-            else np.nan \
-            for c in df]
+    return [_get_categories_as_str(df[c]) for c in df]
 
 
 def custom_describe(df):
