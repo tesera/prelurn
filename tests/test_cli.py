@@ -20,28 +20,72 @@ skip_if_no_s3 = pytest.mark.skipif(env_has_s3_vars(),
                                    reason=('Environment variables for s3 data'
                                            'are not properly configured.'))
 
+def read_two_files(file1, file2):
+    with open(file2, 'r') as a, open(file2, 'r') as b:
+        f1 = a.readlines()
+        f2 = b.readlines()
+
+    return f1, f2
+
 # TODO: check data is correct
-def test_describe(test_data_path):
+def test_describe(test_data_path, expected_data_dir):
     runner = CliRunner()
     result = runner.invoke(cli, ['describe', test_data_path])
 
     assert result.exit_code == 0
-    assert os.path.exists('data_describe.csv')
+
+    generated_file = 'data_describe.csv'
+    expected_file = os.path.join(expected_data_dir, generated_file)
+    output, expected = read_two_files(generated_file,
+                                      expected_file)
+    assert output == expected
 
 
-def test_describe_json(test_data_path):
+def test_describe_json(test_data_path, expected_data_dir):
     runner = CliRunner()
     result = runner.invoke(cli, ['describe', test_data_path, '-j'])
 
     assert result.exit_code == 0
-    assert os.path.exists('data_describe.json')
 
+    generated_file = 'data_describe.json'
+    expected_file = os.path.join(expected_data_dir, generated_file)
+    output, expected = read_two_files(generated_file,
+                                      expected_file)
+
+    assert output == expected
+
+
+def test_describe_using_quartiles(test_data_path, expected_data_dir):
+    runner = CliRunner()
+    result = runner.invoke(cli,
+                           ['describe', test_data_path,
+                            '--quantile-type', 'quartile',
+                            '--outfile', 'data_describe_quartile.csv'])
+
+    assert result.exit_code == 0
+
+    generated_file = 'data_describe_quartile.csv'
+    expected_file = os.path.join(expected_data_dir, generated_file)
+    output, expected = read_two_files(generated_file,
+                                      expected_file)
+
+    assert output == expected
 
 
 def test_describe_json_objects_are_vars():
     # since data is transposed, be careful of json
     # key should be a variable, not a column!
     assert False
+
+
+def test_describe_preserves_given_outfile_name(test_data_path):
+    runner = CliRunner()
+    result = runner.invoke(cli,
+                           ['describe', test_data_path,
+                            '--quantile-type', 'quartile',
+                            '--outfile', 'data_describe_quartile.txt'])
+
+    assert os.path.exists('data_describe_quartile.txt')
 
 
 @skip_if_no_s3
@@ -58,6 +102,6 @@ def test_describe_output_to_s3():
     pass
 
 
-@pytest.mark.xfail(message="not yet implemented")
+@pytest.mark.skip(message="future relase")
 def test_suggest():
     assert False

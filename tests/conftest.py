@@ -12,6 +12,13 @@ def test_data_path():
 
 
 @pytest.fixture
+def expected_data_dir():
+    test_dir = os.path.dirname(os.path.abspath(__file__))
+    expected_data_dir = os.path.join(test_dir, 'data/expected')
+    return expected_data_dir
+
+
+@pytest.fixture
 def df_mixed_types():
     df = pd.DataFrame(OrderedDict(
         numeric = range(6),

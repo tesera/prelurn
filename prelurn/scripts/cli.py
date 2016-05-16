@@ -20,8 +20,9 @@ def create_out_filepath(ctx, param, value):
         ext = 'json' if json else 'csv'
         suffix = 'describe'
         out_filepath = '%s_%s.%s' %(out_filepath, suffix, ext)
+        path = out_filepath
 
-    return out_filepath
+    return path
 
 
 @click.group(context_settings=CONTEXT_SETTINGS)
