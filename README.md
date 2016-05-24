@@ -1,4 +1,10 @@
 # prelurn
+
+Prelurn is a package and CLI for exploring data.
+
+It currently provides summaries of tabular data. Other data types and functions
+may be added in the future.
+
 ## Installation
 
 Docker and (host machine) virtualenv installation are incompatible!
@@ -45,6 +51,40 @@ False
 False
 ```
 
+## Usage
+
+```
+(venv) root@8248c14c4ffc:/opt/prelurn# prelurn --help
+  Usage: prelurn [OPTIONS] COMMAND [ARGS]...
+
+  Machine learning preprocessing steps
+
+  Options:
+      -v, --verbose
+      -h, --help     Show this message and exit.
+
+  Commands:
+      describe  Summarize data in a csv file T
+```
+
+```
+(venv) root@8248c14c4ffc:/opt/prelurn# prelurn describe --help
+  Usage: prelurn describe [OPTIONS] TABLE
+
+  Summarize data in a csv file
+
+  TABLE is the path to a csv file, as per http://pandas.pydata.org/pandas-
+  docs/stable/io.html#basic
+
+  Options:
+      -j, --json                      write output to json file
+      -q, --quantile-type [decile|quartile]
+                                      percentiles to use
+      -o, --outfile PATH              path to use for output data, excluding file
+                                      extension. default is to write to working directory
+      -h, --help                      Show this message and exit.
+```
+
 ## Development
 ### dev.env
 
@@ -59,6 +99,8 @@ AWS_REGION=
 BOTO_CONFIG=
 S3_TEST_DATA_URL=
 ```
+
+BOTO_CONFIG in `dev.env` will override the path specified in Dockerfile.
 
 ### docker-compose
 
