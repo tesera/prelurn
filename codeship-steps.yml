@@ -1,0 +1,3 @@
+- name: test
+  service: prelurn
+  command: bash bin/run_tests.sh

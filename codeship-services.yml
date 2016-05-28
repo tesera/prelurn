@@ -1,0 +1,3 @@
+prelurn:
+  build:
+    dockerfile_path: Dockerfile
