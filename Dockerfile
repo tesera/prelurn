@@ -16,4 +16,7 @@ RUN virtualenv -p python2.7 venv
 
 RUN . venv/bin/activate
 RUN pip install --upgrade pip
-RUN pip install --upgrade .[test]
+
+# install dependencies so that they are cached
+RUN pip install pandas==0.18.0 pytest==2.9.1 click==6.6 boto==2.4.0
+RUN pip install .[test]
