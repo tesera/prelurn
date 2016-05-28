@@ -1,3 +1,5 @@
+[ ![Codeship Status for tesera/prelurn](https://codeship.com/projects/5fe1ee30-0697-0134-b6bc-266f0864d803/status?branch=master)](https://codeship.com/projects/154750)
+
 # prelurn
 
 Prelurn is a package and CLI for exploring data.
