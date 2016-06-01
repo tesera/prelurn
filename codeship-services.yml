@@ -1,4 +1,4 @@
 prelurn:
   build:
     dockerfile_path: Dockerfile
-  cached: true
+  cached: false
