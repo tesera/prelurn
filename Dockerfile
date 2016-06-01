@@ -14,10 +14,9 @@ WORKDIR /opt/prelurn
 RUN pip install virtualenv
 RUN virtualenv -p python2.7 venv
 
-# Setting these environment variables are the same as running
-# source /opt/learn/venv/bin/activate.
-# ENV VIRTUAL_ENV /opt/prelurn/venv
-# ENV PATH /opt/prelurn/venv/bin:$PATH
 RUN . venv/bin/activate
 RUN pip install --upgrade pip
-RUN pip install --upgrade .[test]
+
+# install dependencies so that they are cached
+RUN pip install pandas==0.18.0 pytest==2.9.1 click==6.6 boto==2.40.0
+RUN pip install .[test]
