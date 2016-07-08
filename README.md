@@ -4,8 +4,29 @@
 
 Prelurn is a package and CLI for exploring data.
 
-It currently provides summaries of tabular data. Other data types and functions
-may be added in the future.
+It currently provides summaries of tabular data, augmenting the [describe
+function of pandas](max.pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.describe.html).
+
+```
+(venv) root@b9241715e1c2:/opt/prelurn# prelurn describe tests/data/data.csv
+
+(venv) root@b9241715e1c2:/opt/prelurn# cat data_describe.csv
+
+```
+
+||type|categories|missing_proportion|count|unique|top|freq|mean|std|min|10%|20%|30%|40%|50%|60%|70%|80%|90%|max|
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+|UID|numeric||0.0|64.0||||257.09375|79.36168335988272|106.0|145.9|184.6|211.9|234.60000000000002|257.5|281.4|309.19999999999993|346.6|359.7|373.0|
+|VAR2|numeric||0.0|64.0||||0.201531991390625|0.07087738465807435|0.108853503|0.13695698950000001|0.15321989400000002|0.16363511890000002|0.1732312022|0.1840266945|0.1953042124|0.21185764439999996|0.2354144256|0.2847120188|0.5441622070000001|
+|VAR3|numeric||0.0|64.0||||0.0|0.0|0.0|0.0|0.0|0.0|0.0|0.0|0.0|0.0|0.0|0.0|0.0|
+|VAR4|numeric||0.0|64.0||||0.421875|0.4977628523130841|0.0|0.0|0.0|0.0|0.0|0.0|1.0|1.0|1.0|1.0|1.0|
+|VAR5|numeric||0.0|64.0||||0.234375|0.42695628191498325|0.0|0.0|0.0|0.0|0.0|0.0|0.0|0.0|1.0|1.0|1.0|
+|VAR6|numeric||0.0|64.0||||0.109375|0.3145764348029479|0.0|0.0|0.0|0.0|0.0|0.0|0.0|0.0|0.0|0.7000000000000028|1.0|
+|VAR7|numeric||0.0|64.0||||0.078125|0.27048970875004197|0.0|0.0|0.0|0.0|0.0|0.0|0.0|0.0|0.0|0.0|1.0|
+|VAR8|numeric||0.953125|3.0||||1.0|1.0|0.0|0.2|0.4|0.6|0.8|1.0|1.2|1.4|1.6|1.8|2.0|
+|VAR9|numeric||0.0|64.0||||0.03125|0.17536809360305042|0.0|0.0|0.0|0.0|0.0|0.0|0.0|0.0|0.0|0.0|1.0|
+|VAR10|categorical|"'0'|'1'"|0.0|64|2|'0'|61||||||||||||||
+
 
 ## Installation
 
