@@ -2,10 +2,31 @@
 
 # prelurn
 
-Prelurn is a package and CLI for exploring data.
+Prelurn is a package and CLI for exploring tabular data.
 
-It currently provides summaries of tabular data, augmenting the [describe
-function of pandas](max.pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.describe.html).
+Prelurn describes CSV datasets, augmenting the
+[describe function of pandas](max.pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.describe.html).
+
+For each column, it identifies:  
+
+- data type
+    - (numeric, boolean, timestamp, categorical)
+- descriptive statistics (depending on the data type)
+    - mean
+    - standard deviation
+    - max
+    - min
+    - quantiles or deciles
+    - categories
+    - most frequent value and its number of occurrences
+- data integrity
+    - propertion of observations which are missing
+
+This enables users to do some basic determination of which variables may be
+useful in a machine learning model. Particularly in linear parametric models
+(e.g. LDA, logistic regression), which are sensitive to the distribution of
+features.
+
 
 ```
 (venv) root@b9241715e1c2:/opt/prelurn# prelurn describe tests/data/data.csv
