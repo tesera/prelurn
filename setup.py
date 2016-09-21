@@ -7,7 +7,7 @@ with codecs_open('README.md', encoding='utf-8') as f:
 
 
 setup(name='prelurn',
-      version='0.0.1',
+      version='1.0.0',
       description=u"Preprocessing helper for machine learning on tabular data",
       long_description=long_description,
       classifiers=[],
@@ -23,9 +23,9 @@ setup(name='prelurn',
           'prelurn': ['data/*'],
       },
       install_requires=[
-          'click==6.6',
-          'pandas==0.18.0',
-          'boto==2.40.0',
+          'click>=6.6',
+          'pandas>=0.18.0',
+          'boto>=2.40.0',
       ],
       extras_require={
           'test': ['pytest==2.9.1'],
